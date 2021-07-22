@@ -33,7 +33,14 @@ public class UserController {
 
     @PostMapping("/save")
     public Result save(@Validated @RequestBody User user){
+        User temp = new User();
 
-        return Result.success(user);
+
+        temp.setUsername(user.getUsername());
+        temp.setPassword(user.getPassword());
+        temp.setEmail(user.getEmail());
+
+        userService.save(temp);
+        return Result.success(null);
     }
 }
