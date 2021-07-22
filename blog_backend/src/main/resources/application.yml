@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url : jdbc:mysql://localhost:3306/blog?&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+shiro-redis:
+  enables: true
+  redis-manager:
+    host: 127.0.0.1:6379
+server:
+  port: 8181
+felix:
+  jwt:
+    secret: f4e2e52034348f86b67cde581c0f9eb5
+    expire: 604800
+    header: Authorization
