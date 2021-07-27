@@ -31,20 +31,18 @@
 </template>
 
 <script>
+import md5 from 'js-md5';
+import lodash from 'lodash'
 export default {
     data() {
         var validatePass = (rule, value, callback) => {
-			if (this.value === '') {
-				callback(new Error("请输入密码"));
-			} else if (this.ruleForm.checkPassword !== '') {
-                    this.$refs.ruleForm.validateField('checkPass');
-                }
-                callback();
+		 	if (this.ruleForm.checkPassword !== '') {
+               this.$refs.ruleForm.validateField('checkPass');
+            }
+            callback();
         };
         var validatePass2 = (rule, value, callback) => {
-			if (this.value === '') {
-				callback(new Error("请输入密码"));
-			} else if (value !== this.ruleForm.password) {
+			if (value !== this.ruleForm.password) {
                 callback(new Error('两次输入密码不一致!'));
             } else {
                 callback();
@@ -63,15 +61,21 @@ export default {
 					message: '请输入用户名',
                     trigger: 'blur'
                 }],
-                password: [
-				{
+                password: [{
 					required: true,
+					message: '请输入密码',
+					trigger: 'blur'
+				},
+				{
 					validator: validatePass,
                     trigger: 'blur'
                 }],
-                checkPassword: [
-				{
+                checkPassword: [{
 					required: true,
+					message: '请再次输入密码',
+					trigger: 'blur'
+				},
+				{
 					validator: validatePass2,
                     trigger: 'blur'
                 }],
@@ -94,11 +98,11 @@ export default {
 			const _this = this;
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                     this.$axios.post('http://localhost:8181/save', this.ruleForm).then((res)=>{
-			              const token = res.headers['authorization']
-			              _this.$store.commit('SET_TOKEN', token)
-			              _this.$store.commit('SET_USERINFO', res.data.data)
-			              _this.$router.push("/blogs")
+					 var form = lodash.cloneDeep(this.ruleForm)
+					 form.password = md5(this.ruleForm.password)
+                     this.$axios.post('/user/save', form).then((res)=>{
+						  console.log(res)
+			              _this.$router.push("/login")
 					 })
                 } else {
                     console.log('error submit!!');

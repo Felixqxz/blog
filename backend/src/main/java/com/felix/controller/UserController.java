@@ -1,6 +1,9 @@
 package com.felix.controller;
 
 
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.felix.common.lang.Result;
 import com.felix.entity.User;
 import com.felix.service.UserService;
@@ -8,6 +11,8 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -33,9 +38,13 @@ public class UserController {
 
     @PostMapping("/save")
     public Result save(@Validated @RequestBody User user){
+
+        User existUser = userService.getOne(new QueryWrapper<User>().eq("username", user.getUsername()));
+        Assert.isNull(existUser, "User already exists");
+
         User temp = new User();
-
-
+        temp.setStatus(0);
+        temp.setCreated(LocalDateTime.now());
         temp.setUsername(user.getUsername());
         temp.setPassword(user.getPassword());
         temp.setEmail(user.getEmail());

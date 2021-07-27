@@ -3,7 +3,7 @@
     <el-container>
         <el-header>
             <i class="el-icon-s-custom header"></i>
-            <span class="header"> 注册</span>
+            <span class="header"> 登陆</span>
         </el-header>
         <el-main>
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="login-form">
@@ -51,7 +51,8 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     const _this = this;
-                    this.$axios.post('http://localhost:8181/login', this.ruleForm).then((res) => {
+                    this.$axios.post('/login', this.ruleForm).then((res) => {
+											console.log(res)
                         const token = res.headers['authorization']
                         _this.$store.commit('SET_TOKEN', token)
                         _this.$store.commit('SET_USERINFO', res.data.data)
