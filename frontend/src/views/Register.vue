@@ -65,6 +65,11 @@ export default {
             message: "请输入用户名",
             trigger: "blur",
           },
+          {
+            min: 3,
+            message: "用户名长度不小于 3 个字",
+            trigger: "blur"
+          }
         ],
         password: [
           {

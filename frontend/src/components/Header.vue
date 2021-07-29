@@ -9,7 +9,7 @@
     <div class="action">
       <el-link type="primary" href="/blogs">主页</el-link>
       <el-divider direction="vertical"></el-divider>
-      <el-link type="primary" href="/blog/edit">发表文章</el-link>
+      <el-link type="primary" href="/blog/add">发表文章</el-link>
       <span v-show="!hasLogin">
         <el-divider direction="vertical"></el-divider>
         <el-link type="primary" href="/register">注册</el-link>
