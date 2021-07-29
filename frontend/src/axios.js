@@ -4,12 +4,10 @@ import store from "./store";
 import router from "./router";
 axios.defaults.baseURL='http://localhost:8181'
 axios.interceptors.request.use(config => {
-  console.log("前置拦截")
   return config
 })
 axios.interceptors.response.use(response => {
     const res = response.data;
-    console.log("后置拦截")
     if (res.code === 200) {
       return response
     } else {

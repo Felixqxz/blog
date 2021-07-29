@@ -30,6 +30,7 @@ export default {
     return {
       editForm: {
         id: null,
+        username: '',
         title: '',
         description: '',
         content: ''
@@ -65,6 +66,7 @@ export default {
       this.$axios.get("/blog/" + blogId).then((res) => {
         const blog = res.data.data
         _this.editForm.id = blog.id
+        _this.editForm.username = blog.username
         _this.editForm.title = blog.title
         _this.editForm.description = blog.description
         _this.editForm.content = blog.content

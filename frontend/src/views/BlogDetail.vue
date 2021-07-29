@@ -2,12 +2,15 @@
   <div>
     <Header></Header>
     <div class="blog">
-      <h2>{{blog.title}}</h2>
-      <el-link icon="el-icon-edit" v-if="ownBlog">
-        <router-link :to="{name: 'BlogEdit', params: {blogId: blog.id}}">
-          编辑
-        </router-link>
-      </el-link>
+      <div class="blog-title">
+        <h1>{{blog.title}}</h1>
+        <p>作者：{{blog.username}}</p>
+        <el-link icon="el-icon-edit" v-if="ownBlog">
+          <router-link :to="{name: 'BlogEdit', params: {blogId: blog.id}}">
+            编辑
+          </router-link>
+        </el-link>
+      </div>
       <el-divider></el-divider>
       <div class="markdown-body" v-html="blog.content"></div>
     </div>
@@ -25,6 +28,7 @@ export default {
     return {
       blog: {
         userId: null,
+        username: '用户名',
         title: '标题',
         description: '内容',
         content: ''
@@ -36,8 +40,10 @@ export default {
     const blogId = this.$route.params.blogId
     const _this = this
     this.$axios.get("/blog/" + blogId).then((res) => {
+    console.log(res.data.data)
       const blog = res.data.data
       _this.blog.id = blog.id
+      _this.blog.username = blog.username
       _this.blog.title = blog.title
 
       var MarkdownIt = require("markdown-it")
@@ -58,5 +64,10 @@ export default {
   width: 100%;
   min-height: 700px;
   padding: 20px 15px;
+}
+
+.blog-title {
+  margin: 0 auto;
+  text-align: center;
 }
 </style>

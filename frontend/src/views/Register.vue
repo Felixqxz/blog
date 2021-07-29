@@ -8,19 +8,19 @@
       <el-main>
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="login-form">
           <el-form-item label="用户名" prop="username">
-            <el-input type="text" v-model="ruleForm.username" auto-complete="off"></el-input>
+            <el-input type="text" v-model="ruleForm.username" auto-complete="off" @keyup.enter.native="submitForm('ruleForm')"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="ruleForm.password" auto-complete="off"></el-input>
+            <el-input type="password" v-model="ruleForm.password" auto-complete="off" @keyup.enter.native="submitForm('ruleForm')"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="checkPassword">
-            <el-input type="password" v-model="ruleForm.checkPassword" auto-complete="off"></el-input>
+            <el-input type="password" v-model="ruleForm.checkPassword" auto-complete="off" @keyup.enter.native="submitForm('ruleForm')"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
-            <el-input type="email" v-model="ruleForm.email"></el-input>
+            <el-input type="email" v-model="ruleForm.email" @keyup.enter.native="submitForm('ruleForm')"></el-input>
           </el-form-item>
           <el-form-item class="form-button">
-            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
             <br /><br />
             <router-link to="/login" class="jump">

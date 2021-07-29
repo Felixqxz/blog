@@ -9,6 +9,7 @@
               <router-link :to="{name: 'BlogDetail', params: {blogId: blog.id}}" class="title">{{blog.title}}</router-link>
             </h4>
             <p>{{blog.description}}</p>
+            <el-row class="author">作者：{{blog.username}}</el-row>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -36,7 +37,6 @@ export default {
     page(currentPage) {
       const _this = this
       _this.$axios.get("/blogs?currentPage=" + currentPage).then(res => {
-        console.log(res)
         _this.blogs = res.data.data.records
         _this.currentPage = res.data.data.currentPage
         _this.total = res.data.data.total
@@ -59,5 +59,9 @@ export default {
 .title {
   font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.author {
+  text-align: right;
 }
 </style>
