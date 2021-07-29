@@ -50,7 +50,11 @@ public class AccountRealm extends AuthorizingRealm {
         }
 
         AccountProfile accountProfile = new AccountProfile();
-        BeanUtils.copyProperties(user, accountProfile);
+
+        accountProfile.setId(user.getId());
+        accountProfile.setUsername(user.getUsername());
+        accountProfile.setAvatar(user.getAvatar());
+        accountProfile.setEmail(user.getEmail());
 
         return new SimpleAuthenticationInfo(accountProfile, jwtToken.getCredentials(), getName());
     }

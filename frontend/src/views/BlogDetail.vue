@@ -47,8 +47,6 @@ export default {
       _this.blog.content = result
 
       _this.ownBlog = (blog.userId === _this.$store.getters.getUser.id)
-      console.log(blog.userId)
-      console.log(_this.$store.getters.getUser.id)
     })
   }
 }

@@ -76,7 +76,6 @@ export default {
         const _this = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.editForm)
             this.$axios.post('/blog/edit', this.editForm, {
               headers: {
                 "Authorization": localStorage.getItem("token")
