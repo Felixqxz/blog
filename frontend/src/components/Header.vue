@@ -82,6 +82,7 @@ export default {
 }
 
 .title {
+  font-size: 50px;
   color: navy;
   text-align: center;
 }
