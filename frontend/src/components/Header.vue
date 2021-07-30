@@ -1,28 +1,35 @@
 <template>
   <div class="content">
-    <h1>Felix's Blog</h1>
-    <div class="block">
-      <el-avatar :size="50" :src="user.avatar"></el-avatar>
-      <div>{{user.username}}</div>
-    </div>
+    <el-row>
 
-    <div class="action">
-      <el-link type="primary" href="/blogs">主页</el-link>
-      <el-divider direction="vertical"></el-divider>
-      <el-link type="primary" href="/blog/add">发表文章</el-link>
-      <span v-show="!hasLogin">
+      <el-col :span="8" class="action">
+        <el-link type="primary" href="/blogs">主页</el-link>
         <el-divider direction="vertical"></el-divider>
-        <el-link type="primary" href="/register">注册</el-link>
-      </span>
-      <span v-show="!hasLogin">
-        <el-divider direction="vertical"></el-divider>
-        <el-link type="primary" href="/login">登陆</el-link>
-      </span>
-      <span v-show="hasLogin">
-        <el-divider direction="vertical"></el-divider>
-        <el-link type="primary" @click="logout">退出登陆</el-link>
-      </span>
-    </div>
+        <el-link type="primary" href="/blog/add">发表文章</el-link>
+
+      </el-col>
+
+      <el-col :span="8">
+        <h1 class="title">Felix's Blog</h1>
+      </el-col>
+
+      <el-col :span="8" class="block">
+        <span v-show="!hasLogin">
+          <el-link type="primary" href="/register">注册</el-link>
+          <el-divider direction="vertical"></el-divider>
+        </span>
+        <span v-show="!hasLogin">
+          <el-link type="primary" href="/login">登陆</el-link>
+          <el-divider direction="vertical"></el-divider>
+        </span>
+        <span v-show="hasLogin">
+          <el-link type="primary" @click="logout">退出登陆&nbsp;</el-link>
+        </span>
+        <span>{{user.username}}&nbsp;</span>
+        <el-avatar :size="50" :src="user.avatar"></el-avatar>
+      </el-col>
+
+    </el-row>
   </div>
 </template>
 
@@ -69,6 +76,18 @@ export default {
   text-align: center;
 }
 
+.block {
+  text-align: right;
+  padding: 5px;
+}
+
+.title {
+  color: navy;
+  text-align: center;
+}
+
 .action {
+  text-align: left;
+  margin-top: 30px;
 }
 </style>

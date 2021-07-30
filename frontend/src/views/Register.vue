@@ -2,8 +2,12 @@
   <div>
     <el-container>
       <el-header>
-        <i class="el-icon-s-custom header"></i>
-        <span class="header"> 注册</span>
+        <el-col :span="11" class="link">
+          <el-link type="primary" href="/blogs" :underline="false">首页</el-link>
+        </el-col>
+        <el-col :span="13"><i class="el-icon-s-custom header"></i>
+          <span class="header"> 注册</span>
+        </el-col>
       </el-header>
       <el-main>
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="login-form">

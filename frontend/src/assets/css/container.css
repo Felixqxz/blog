@@ -22,6 +22,10 @@
     line-height: 160px;
 }
 
+.el-col {
+    text-align: left;
+}
+
 body > .el-container {
     margin-bottom: 40px;
 }
