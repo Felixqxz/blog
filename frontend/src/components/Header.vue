@@ -71,7 +71,7 @@ export default {
 
 <style scoped>
 .content {
-  max-width: 960px;
+  background-color: #b3c0d1;
   margin: 0 auto;
   text-align: center;
 }
@@ -82,7 +82,7 @@ export default {
 }
 
 .title {
-  font-size: 50px;
+  font-size: 40px;
   color: navy;
   text-align: center;
 }

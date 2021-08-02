@@ -61,7 +61,7 @@ public class BlogController {
             temp.setUserId(ShiroUtil.getProfile().getId());
             temp.setUsername(ShiroUtil.getProfile().getUsername());
             temp.setCreated(LocalDateTime.now());
-            temp.setStatus(0);
+            temp.setStatus(0);e
         }
 
         temp.setTitle(blog.getTitle());

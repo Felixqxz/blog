@@ -28,7 +28,7 @@
             <el-button @click="resetForm('ruleForm')">重置</el-button>
             <br /><br />
             <router-link to="/login" class="jump">
-              <el-button type="info">已经注册过？请登录</el-button>
+              <el-button>已经注册过？请登录</el-button>
             </router-link>
           </el-form-item>
         </el-form>
