@@ -56,6 +56,7 @@ export default {
       }
     };
     return {
+      loginForm: {},
       ruleForm: {
         username: "",
         password: "",
@@ -113,16 +114,48 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
+    callback() {
+      const _this = this
+      this.$axios.post("/login", this.loginForm).then((res) => {
+        console.log(res);
+        const token = res.headers["authorization"];
+        _this.$store.commit("SET_TOKEN", token);
+        _this.$store.commit("SET_USERINFO", res.data.data);
+        _this.$router.push("/blogs");
+      });
+    },
+    async submitForm(formName) {
       const _this = this;
       this.$refs[formName].validate((valid) => {
         if (valid) {
           var form = lodash.cloneDeep(this.ruleForm);
           form.password = md5(this.ruleForm.password);
-          this.$axios.post("/user/save", form).then((res) => {
-            console.log(res);
-            _this.$router.push("/login");
-          });
+          this.loginForm.username = this.ruleForm.username;
+          this.loginForm.password = this.ruleForm.password;
+
+          // this.$axios.post("/user/save", form)
+
+          // this.$axios.post("/login", loginForm).then((res) => {
+          //   console.log(res);
+          //   const token = res.headers["authorization"];
+          //   _this.$store.commit("SET_TOKEN", token);
+          //   _this.$store.commit("SET_USERINFO", res.data.data);
+          //   _this.$router.push("/blogs");
+          // })
+
+          this.$axios.post("/user/save", form).then(() => {
+            // _this.$axios.post("/login", this.loginForm).then((res) => {
+            //   console.log(res);
+            //   const token = res.headers["authorization"];
+            //   _this.$store.commit("SET_TOKEN", token);
+            //   _this.$store.commit("SET_USERINFO", res.data.data);
+            //   _this.$router.push("/blogs");
+            // });
+            _this.callback()
+          })
+
+
+
         } else {
           console.log("error submit!!");
           return false;
@@ -138,4 +171,7 @@ export default {
 
 <style>
 @import "../assets/css/container.css";
+.el-link {
+  font-family: STHeiti;
+}
 </style>

@@ -74,6 +74,8 @@ export default {
   background-color: #b3c0d1;
   margin: 0 auto;
   text-align: center;
+  max-height: 100px;
+  margin-bottom: 5px;
 }
 
 .block {
@@ -89,6 +91,11 @@ export default {
 
 .action {
   text-align: left;
-  margin-top: 30px;
+  margin-top: 35px;
+}
+
+.el-link {
+
+  font-family: STHeiti;
 }
 </style>

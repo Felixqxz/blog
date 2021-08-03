@@ -83,4 +83,7 @@ export default {
 
 <style>
 @import "../assets/css/container.css";
+.el-link {
+  font-family: STHeiti;
+}
 </style>

@@ -55,7 +55,7 @@ export default {
     Search() {
       const tempArr = []
       for (let i = 0; i < this.blogs.length; i += 1) {
-        if (this.blogs[i].title.includes(this.searchText)) {
+        if (this.blogs[i].title.includes(this.searchText) || this.blogs[i].username.includes(this.searchText) || this.blogs[i].description.includes(this.searchText)) {
           tempArr.push(this.blogs[i])
         }
       }
@@ -76,6 +76,7 @@ export default {
 }
 
 .block {
+  margin: auto;
   max-width: 960px;
 }
 .page {
