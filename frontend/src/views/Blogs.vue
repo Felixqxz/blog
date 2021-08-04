@@ -94,5 +94,6 @@ export default {
 
 .search-bar {
   text-align: end;
+  display: flex;
 }
 </style>

@@ -114,47 +114,25 @@ export default {
     };
   },
   methods: {
-    callback() {
-      const _this = this
-      this.$axios.post("/login", this.loginForm).then((res) => {
-        console.log(res);
-        const token = res.headers["authorization"];
-        _this.$store.commit("SET_TOKEN", token);
-        _this.$store.commit("SET_USERINFO", res.data.data);
-        _this.$router.push("/blogs");
-      });
-    },
-    async submitForm(formName) {
+
+    submitForm(formName) {
       const _this = this;
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
           var form = lodash.cloneDeep(this.ruleForm);
           form.password = md5(this.ruleForm.password);
           this.loginForm.username = this.ruleForm.username;
           this.loginForm.password = this.ruleForm.password;
 
-          // this.$axios.post("/user/save", form)
+          await this.$axios.post("/user/save", form)
 
-          // this.$axios.post("/login", loginForm).then((res) => {
-          //   console.log(res);
-          //   const token = res.headers["authorization"];
-          //   _this.$store.commit("SET_TOKEN", token);
-          //   _this.$store.commit("SET_USERINFO", res.data.data);
-          //   _this.$router.push("/blogs");
-          // })
+          const res = await this.$axios.post("/login", this.loginForm)
 
-          this.$axios.post("/user/save", form).then(() => {
-            // _this.$axios.post("/login", this.loginForm).then((res) => {
-            //   console.log(res);
-            //   const token = res.headers["authorization"];
-            //   _this.$store.commit("SET_TOKEN", token);
-            //   _this.$store.commit("SET_USERINFO", res.data.data);
-            //   _this.$router.push("/blogs");
-            // });
-            _this.callback()
-          })
-
-
+          console.log(res);
+          const token = res.headers["authorization"];
+          this.$store.commit("SET_TOKEN", token);
+          this.$store.commit("SET_USERINFO", res.data.data);
+          this.$router.push("/blogs");
 
         } else {
           console.log("error submit!!");
