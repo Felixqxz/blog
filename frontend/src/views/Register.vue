@@ -23,6 +23,7 @@
           <el-form-item label="邮箱" prop="email">
             <el-input type="email" v-model="ruleForm.email" @keyup.enter.native="submitForm('ruleForm')"></el-input>
           </el-form-item>
+
           <el-form-item class="form-button">
             <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -58,10 +59,12 @@ export default {
     return {
       loginForm: {},
       ruleForm: {
-        username: "",
-        password: "",
-        checkPassword: "",
-        email: "",
+        username: '',
+        password: '',
+        checkPassword: '',
+        email: '',
+        avatar: '',
+        imageUrl: ''
       },
       rules: {
         username: [

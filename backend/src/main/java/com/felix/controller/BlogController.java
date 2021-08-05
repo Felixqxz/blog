@@ -36,7 +36,9 @@ public class BlogController {
     @GetMapping("/blogs")
     public Result list(@RequestParam(defaultValue = "1") Integer currentPage){
         Page page = new Page(currentPage, 5);
-        IPage pageData = blogService.page(page, new QueryWrapper<Blog>().orderByDesc("created"));
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<Blog>();
+        queryWrapper.eq("status", 0);
+        IPage pageData = blogService.page(page, queryWrapper.orderByDesc("created"));
         return Result.success(pageData);
     }
 
@@ -52,7 +54,7 @@ public class BlogController {
     @PostMapping("/blog/edit")
     public Result edit(@Validated @RequestBody Blog blog) {
         System.out.println(blog.toString());
-        Blog temp = null;
+        Blog temp;
         if(blog.getId() != null) {
             temp = blogService.getById(blog.getId());
             Assert.isTrue(temp.getUserId().longValue() == ShiroUtil.getProfile().getId(), "没有权限编辑");
@@ -70,4 +72,14 @@ public class BlogController {
         blogService.saveOrUpdate(temp);
         return Result.success(null);
     }
+
+    @RequiresAuthentication
+    @PostMapping("/blog/delete")
+    public Result delete(@Validated @RequestBody Blog blog) {
+        Blog temp = blogService.getById(blog.getId());
+        temp.setStatus(-1);
+        blogService.saveOrUpdate(temp);
+        return Result.success(null);
+    }
+
 }

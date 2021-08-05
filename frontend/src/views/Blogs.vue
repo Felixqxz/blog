@@ -56,24 +56,13 @@ export default {
   methods: {
     async page(currentPage) {
       const res = await this.$axios.get("/blogs?currentPage=" + currentPage)
-      console.log(res.data.data)
+      console.log(res)
       this.blogs = res.data.data.records
       this.currentPage = res.data.data.currentPage
       this.total = res.data.data.total
       this.pageSize = res.data.data.size
       this.showContents = res.data.data.records
 
-      let s = new Set()
-      for (var i = 0; i < this.blogs.length; i++) {
-        s.add(this.blogs[i].username)
-      }
-      for (var name of s) {
-        this.options.push({
-          label: name,
-          value: name
-        })
-      }
-      console.log(this.options)
     },
     Search() {
       const tempArr = []
@@ -101,8 +90,18 @@ export default {
       }
     }
   },
-  created() {
-    this.page(1)
+  async created() {
+    await this.page(1)
+    let s = new Set()
+    for (var blog of this.blogs) {
+      s.add(blog.username)
+    }
+    for (var name of s) {
+      this.options.push({
+        label: name,
+        value: name
+      })
+    }
   },
 
 };

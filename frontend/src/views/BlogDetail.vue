@@ -12,6 +12,10 @@
               编辑
             </router-link>
           </el-link>
+          &nbsp;
+          <el-link icon="el-icon-delete" v-if="ownBlog" :underline="false">
+            <el-button type="text" @click="deleteBlog">删除</el-button>
+          </el-link>
         </p>
       </div>
       <el-divider></el-divider>
@@ -58,6 +62,32 @@ export default {
 
       _this.ownBlog = (blog.userId === _this.$store.getters.getUser.id)
     })
+  },
+  methods: {
+    deleteBlog() {
+      const _this = this
+      this.$confirm('此操作将永久删除该文档, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        await _this.$axios.post("/blog/delete", this.blog, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+              }
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+        _this.$router.push("/blogs")
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    }
   }
 }
 </script>
@@ -68,7 +98,7 @@ export default {
   min-height: 700px;
   padding: 20px 15px;
   text-align: center;
-  margin: 0 100px 0 100px
+  margin: 0 100px 0 100px;
 }
 
 .blog-title {
