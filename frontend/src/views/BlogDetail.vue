@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="blog-detail">
     <Header></Header>
+    <br>
     <div class="blog">
       <div class="blog-title">
         <h1>{{blog.title}}</h1>
@@ -64,9 +65,10 @@ export default {
 <style scoped>
 .blog {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-  width: 100%;
   min-height: 700px;
   padding: 20px 15px;
+  text-align: center;
+  margin: 0 100px 0 100px
 }
 
 .blog-title {

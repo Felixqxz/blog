@@ -61,8 +61,9 @@ export default {
   created() {
     if (this.$store.getters.getUser.username) {
       this.user.username = this.$store.getters.getUser.username
+      if (this.$store.getters.getUser.avatar) {
       this.user.avatar = this.$store.getters.getUser.avatar
-
+      }
       this.hasLogin = true
     }
   }
@@ -71,7 +72,7 @@ export default {
 
 <style scoped>
 .content {
-  background-color: #b3c0d1;
+  background-color: lightblue;
   margin: 0 auto;
   text-align: center;
   max-height: 100px;
@@ -92,10 +93,5 @@ export default {
 .action {
   text-align: left;
   margin-top: 35px;
-}
-
-.el-link {
-
-  font-family: STHeiti;
 }
 </style>

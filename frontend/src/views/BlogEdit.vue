@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <div class="blog-edit">
     <Header></Header>
+    <br>
     <div class="content">
-      <el-form ref="editForm" status-icon :model="editForm" :rules="rules" label-width="80px">
+      <el-form ref="editForm" status-icon :model="editForm" :rules="rules" label-width="70px">
         <el-form-item label="标题" prop="title">
           <el-input v-model="editForm.title"></el-input>
         </el-form-item>
         <el-form-item label="摘要" prop="description">
           <el-input v-model="editForm.description" clearable></el-input>
         </el-form-item>
+        
         <el-form-item label="内容" prop="content">
           <mavon-editor v-model="editForm.content" />
         </el-form-item>
@@ -101,7 +103,9 @@ export default {
 </script>
 
 <style scoped>
-.content {
+
+.el-form {
+  margin: 0 100px 0 50px;
   text-align: center;
 }
 </style>

@@ -1,12 +1,23 @@
 <template>
   <div class="blogs">
     <Header></Header>
+    <br>
     <div class="block">
       <div class="search-bar">
-        <el-input placeholder="请输入内容" v-model="searchText" clearable @keyup.enter.native="Search">
-        </el-input>
-        <el-button type="primary" @click="Search">搜索</el-button>
+        <div class="filter">
+          筛选
+          <el-select v-model="filterUsers" multiple placeholder="请选择作者" @change="userFilter">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+        <div class="search">
+          <el-input placeholder="请输入搜索内容" v-model="searchText" clearable @keyup.enter.native="Search">
+          </el-input> &nbsp;
+          <el-button type="primary" @click="Search">搜索</el-button>
+        </div>
       </div>
+      <br>
       <el-timeline>
         <el-timeline-item :timestamp="blog.created" placement="top" v-for="blog in showContents">
           <el-card>
@@ -37,30 +48,57 @@ export default {
       total: 0,
       pageSize: 5,
       searchText: '',
-      showContents: []
+      showContents: [],
+      options: [],
+      filterUsers: []
     }
   },
   methods: {
-    page(currentPage) {
-      const _this = this
-      _this.$axios.get("/blogs?currentPage=" + currentPage).then(res => {
-        console.log(res.data.data)
-        _this.blogs = res.data.data.records
-        _this.currentPage = res.data.data.currentPage
-        _this.total = res.data.data.total
-        _this.pageSize = res.data.data.size
-        _this.showContents = res.data.data.records
-      })
+    async page(currentPage) {
+      const res = await this.$axios.get("/blogs?currentPage=" + currentPage)
+      console.log(res.data.data)
+      this.blogs = res.data.data.records
+      this.currentPage = res.data.data.currentPage
+      this.total = res.data.data.total
+      this.pageSize = res.data.data.size
+      this.showContents = res.data.data.records
+
+      let s = new Set()
+      for (var i = 0; i < this.blogs.length; i++) {
+        s.add(this.blogs[i].username)
+      }
+      for (var name of s) {
+        this.options.push({
+          label: name,
+          value: name
+        })
+      }
+      console.log(this.options)
     },
     Search() {
       const tempArr = []
-      for (let i = 0; i < this.blogs.length; i += 1) {
-        if (this.blogs[i].title.includes(this.searchText) || this.blogs[i].username.includes(this.searchText) || this.blogs[i].description.includes(this.searchText)) {
-          tempArr.push(this.blogs[i])
+      for (var blog of this.blogs) {
+        if (blog.title.includes(this.searchText) || blog.description.includes(this.searchText)) {
+          tempArr.push(blog)
         }
       }
       this.showContents = tempArr
       console.log(tempArr)
+    },
+    userFilter() {
+      if (this.filterUsers.length == 0) {
+        this.showContents = this.blogs
+      } else {
+        const tempArr = []
+        for (var filterUser of this.filterUsers) {
+          for (var blog of this.blogs) {
+            if (filterUser == blog.username) {
+              tempArr.push(blog)
+            }
+          }
+        }
+        this.showContents = tempArr
+      }
     }
   },
   created() {
@@ -93,7 +131,11 @@ export default {
 }
 
 .search-bar {
-  text-align: end;
+  display: flex;
+  justify-content: space-between;
+}
+
+.search {
   display: flex;
 }
 </style>
