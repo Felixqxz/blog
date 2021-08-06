@@ -50,13 +50,14 @@ export default {
       searchText: '',
       showContents: [],
       options: [],
-      filterUsers: []
+      filterUsers: [],
     }
   },
   methods: {
     async page(currentPage) {
       const res = await this.$axios.get("/blogs?currentPage=" + currentPage)
       console.log(res)
+      const _this = this
       this.blogs = res.data.data.records
       this.currentPage = res.data.data.currentPage
       this.total = res.data.data.total
@@ -92,14 +93,12 @@ export default {
   },
   async created() {
     await this.page(1)
-    let s = new Set()
-    for (var blog of this.blogs) {
-      s.add(blog.username)
-    }
-    for (var name of s) {
-      this.options.push({
-        label: name,
-        value: name
+    const res = await this.$axios.get("/blogs/getAuthors")
+    const _this = this
+    for (var author of res.data.data) {
+      _this.options.push({
+        value: author,
+        label: author
       })
     }
   },

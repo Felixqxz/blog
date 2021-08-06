@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -40,6 +44,16 @@ public class BlogController {
         queryWrapper.eq("status", 0);
         IPage pageData = blogService.page(page, queryWrapper.orderByDesc("created"));
         return Result.success(pageData);
+    }
+
+    @GetMapping("/blogs/getAuthors")
+    public Result filterBlogs(){
+        Set<String> authors = new HashSet<>();
+        List<Blog> blogs = blogService.list();
+        for (Blog blog : blogs) {
+            authors.add(blog.getUsername());
+        }
+        return Result.success(authors);
     }
 
     @GetMapping("/blog/{id}")
