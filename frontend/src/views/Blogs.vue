@@ -6,7 +6,7 @@
       <div class="search-bar">
         <div class="filter">
           筛选
-          <el-select v-model="filterUsers" multiple placeholder="请选择作者" @change="userFilter">
+          <el-select v-model="filterUsers" placeholder="请选择作者" @change="userFilter" clearable>
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
@@ -50,7 +50,7 @@ export default {
       searchText: '',
       showContents: [],
       options: [],
-      filterUsers: [],
+      filterUsers: "",
     }
   },
   methods: {
@@ -62,8 +62,8 @@ export default {
       this.currentPage = res.data.data.currentPage
       this.total = res.data.data.total
       this.pageSize = res.data.data.size
-      this.showContents = res.data.data.records
-
+      this.showContents = this.blogs
+      this.userFilter()
     },
     Search() {
       const tempArr = []
@@ -76,15 +76,13 @@ export default {
       console.log(tempArr)
     },
     userFilter() {
-      if (this.filterUsers.length == 0) {
+      if (this.filterUsers == "") {
         this.showContents = this.blogs
       } else {
         const tempArr = []
-        for (var filterUser of this.filterUsers) {
           for (var blog of this.blogs) {
-            if (filterUser == blog.username) {
+            if (this.filterUsers == blog.username) {
               tempArr.push(blog)
-            }
           }
         }
         this.showContents = tempArr
