@@ -6,13 +6,13 @@
       <div class="search-bar">
         <div class="filter">
           筛选
-          <el-select v-model="filterUsers" placeholder="请选择作者" @change="userFilter" clearable>
+          <el-select v-model="filterUsers" placeholder="请选择作者" @change="filter" clearable>
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </div>
         <div class="search">
-          <el-input placeholder="请输入搜索内容" v-model="searchText" clearable @keyup.enter.native="Search">
+          <el-input placeholder="请输入标题" v-model="searchText" clearable @change="filter">
           </el-input> &nbsp;
           <el-button type="primary" @click="Search">搜索</el-button>
         </div>
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     async page(currentPage) {
-      const res = await this.$axios.get("/blogs?currentPage=" + currentPage + "&author=" + this.filterUsers)
+      const res = await this.$axios.get("/blogs?currentPage=" + currentPage + "&author=" + this.filterUsers + "&search=" + this.searchText)
       console.log(res)
       this.blogs = res.data.data.records
       this.currentPage = res.data.data.currentPage
@@ -63,17 +63,7 @@ export default {
       this.pageSize = res.data.data.size
       this.showContents = this.blogs
     },
-    Search() {
-      const tempArr = []
-      for (var blog of this.blogs) {
-        if (blog.title.includes(this.searchText) || blog.description.includes(this.searchText)) {
-          tempArr.push(blog)
-        }
-      }
-      this.showContents = tempArr
-      console.log(tempArr)
-    },
-    userFilter() {
+    filter() {
       this.page(1)
     }
   },
