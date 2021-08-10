@@ -38,10 +38,13 @@ public class BlogController {
     private BlogService blogService;
 
     @GetMapping("/blogs")
-    public Result list(@RequestParam(defaultValue = "1") Integer currentPage){
+    public Result list(@RequestParam(defaultValue = "1") Integer currentPage, @RequestParam String author){
         Page page = new Page(currentPage, 5);
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<Blog>();
         queryWrapper.eq("status", 0);
+        if (!author.equals("")) {
+            queryWrapper.eq("username", author);
+        }
         IPage pageData = blogService.page(page, queryWrapper.orderByDesc("created"));
         return Result.success(pageData);
     }

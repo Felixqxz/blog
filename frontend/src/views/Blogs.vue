@@ -55,15 +55,13 @@ export default {
   },
   methods: {
     async page(currentPage) {
-      const res = await this.$axios.get("/blogs?currentPage=" + currentPage)
+      const res = await this.$axios.get("/blogs?currentPage=" + currentPage + "&author=" + this.filterUsers)
       console.log(res)
-      const _this = this
       this.blogs = res.data.data.records
       this.currentPage = res.data.data.currentPage
       this.total = res.data.data.total
       this.pageSize = res.data.data.size
       this.showContents = this.blogs
-      this.userFilter()
     },
     Search() {
       const tempArr = []
@@ -76,17 +74,7 @@ export default {
       console.log(tempArr)
     },
     userFilter() {
-      if (this.filterUsers == "") {
-        this.showContents = this.blogs
-      } else {
-        const tempArr = []
-          for (var blog of this.blogs) {
-            if (this.filterUsers == blog.username) {
-              tempArr.push(blog)
-          }
-        }
-        this.showContents = tempArr
-      }
+      this.page(1)
     }
   },
   async created() {
