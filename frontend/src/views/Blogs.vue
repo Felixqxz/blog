@@ -14,7 +14,7 @@
         <div class="search">
           <el-input placeholder="请输入标题" v-model="searchText" clearable @change="filter">
           </el-input> &nbsp;
-          <el-button type="primary" @click="Search">搜索</el-button>
+          <el-button type="primary" @click="filter">搜索</el-button>
         </div>
       </div>
       <br>
@@ -58,7 +58,7 @@ export default {
       const res = await this.$axios.get("/blogs?currentPage=" + currentPage + "&author=" + this.filterUsers + "&search=" + this.searchText)
       console.log(res)
       this.blogs = res.data.data.records
-      this.currentPage = res.data.data.currentPage
+      this.currentPage = res.data.data.current
       this.total = res.data.data.total
       this.pageSize = res.data.data.size
       this.showContents = this.blogs
